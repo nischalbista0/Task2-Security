@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { HiMail, HiUser, HiUserCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import zxcvbn from "zxcvbn";
 import AuthCard from "../components/Login-Signup/AuthCard";
 import PasswordFieldWithLabel from "../components/Login-Signup/PasswordFieldWithLabel";
 import RingAndCardsDesign from "../components/Login-Signup/RingAndCardsDesign";
@@ -11,18 +12,29 @@ import PrimaryButton from "../components/common/PrimaryButton";
 import { UserContext } from "../context/UserContext";
 
 const SignupPage = () => {
-  const {isLoading, setIsLoading} = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(UserContext);
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleSignup = (e) => {
     e.preventDefault();
-
     setIsLoading(true);
+
+    // Assess password strength
+    const passwordScore = zxcvbn(password);
+    setPasswordStrength(passwordScore.score);
+
+    // Check if password meets complexity requirements
+    if (passwordScore.score < 2) {
+      setError("Password is too weak. Please choose a stronger password.");
+      setIsLoading(false);
+      return;
+    }
 
     axios
       .post("http://localhost:3001/users/register", {
@@ -53,6 +65,50 @@ const SignupPage = () => {
         setIsLoading(false);
       });
   };
+
+  const getPasswordStrengthLabel = (score) => {
+    switch (score) {
+      case 0:
+        return "Very Weak";
+      case 1:
+        return "Weak";
+      case 2:
+        return "Moderate";
+      case 3:
+        return "Strong";
+      case 4:
+        return "Very Strong";
+      default:
+        return "";
+    }
+  };
+  
+  const getPasswordStrengthColor = (score) => {
+    switch (score) {
+      case 0:
+        return "red";
+      case 1:
+        return "orange";
+      case 2:
+        return "yellow";
+      case 3:
+        return "green";
+      case 4:
+        return "dark-green";
+      default:
+        return "";
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    // Update password state
+    setPassword(e.target.value);
+
+    // Assess password strength on each input change
+    const passwordScore = zxcvbn(e.target.value);
+    setPasswordStrength(passwordScore.score);
+  };
+  
 
   return (
     <div className="bg-container bg-[url('./assets/images/light-bg.jpg')] dark:bg-[url('./assets/images/dark-bg.jpg')] bg-contain bg-no-repeat min-h-[100vh] flex bg-light-bg dark:bg-dark-bg">
@@ -110,8 +166,18 @@ const SignupPage = () => {
                 label="Password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
+              <div className="text-sm text-gray-500">
+                Password Strength:{" "}
+                <span
+                  className={`text-${getPasswordStrengthColor(
+                    passwordStrength
+                  )}`}
+                >
+                  {getPasswordStrengthLabel(passwordStrength)}
+                </span>
+              </div>
 
               <div className="flex flex-col gap-2 mb-2">
                 <div className="flex gap-2">

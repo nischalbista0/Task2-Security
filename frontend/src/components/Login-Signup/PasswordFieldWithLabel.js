@@ -25,13 +25,6 @@ const PasswordFieldWithLabel = ({ label, placeholder, value, onChange }) => {
     <div className="flex flex-col gap-2">
       <label htmlFor="password" className="font-semibold dark:text-white">
         {label}
-
-        {error && (
-          <span className="text-sm font-medium text-purple-lighter-hover">
-            {" "}
-            ({error})
-          </span>
-        )}
       </label>
 
       <div className="p-4 bg-white dark:bg-black flex items-center gap-2 border dark:border-white dark:text-white transition-all duration-200 ease-linear hover:border-purple-lighter focus:border-purple-lighter">
