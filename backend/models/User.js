@@ -47,6 +47,18 @@ const userSchema = new Schema({
       ref: "Book",
     },
   ],
+  failedLoginAttempts: {
+    type: Number,
+    default: 0,
+  },
+  accountLocked: {
+    type: Boolean,
+    default: false,
+  },
+  lastFailedLoginAttempt: {
+    type: Date,
+    default: null,
+  },
 });
 
 // set toJSON method to not to return hashed password
