@@ -7,17 +7,36 @@ const registerUser = async (req, res, next) => {
   const { username, password, fullname, email } = req.body;
 
   try {
-    const existingUser = await User.findOne({ username: username });
-    if (existingUser) {
-      return res.status(400).json({ error: "Duplicate username" });
-    }
-
+    // Check for empty fields
     if (!username || !password || !fullname || !email) {
       return res.status(400).json({ error: "Please fill in all fields" });
     }
 
     if (!email.includes("@") || !email.includes(".")) {
       return res.status(400).json({ error: "Please enter a valid email" });
+    }
+
+    // Check for password complexity
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}[\]:;<>,.?~\\-])/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        error:
+          "Password must include combination of: Uppercase letters, Lowercase letters, Numbers, Special characters (e.g.,!, @, #, $)",
+      });
+    }
+
+    // Check for password length
+    const minLength = 8;
+    if (password.length < minLength) {
+      return res.status(400).json({
+        error: `Password length should be at least ${minLength} characters.`,
+      });
+    }
+
+    const existingUser = await User.findOne({ username: username });
+    if (existingUser) {
+      return res.status(400).json({ error: "Duplicate username" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
