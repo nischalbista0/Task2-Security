@@ -27,7 +27,7 @@ app.use(express.static("public"));
 
 app.use("/users", user_routes);
 
-app.use("/books", verifyUser, books_routes);
+app.use("/books", books_routes);
 
 app.use("/exchange", exchangeRoutes);
 

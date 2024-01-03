@@ -80,9 +80,12 @@ const loginUser = async (req, res, next) => {
         user.failedLoginAttempts = 0;
         await user.save();
       } else {
+        const remainingTime = Math.ceil(2 - lockoutDurationMinutes); // Calculate remaining time rounded up
         return res
           .status(400)
-          .json({ error: "Account is locked. Please try again later." });
+          .json({
+            error: `Account is locked. Please try again later after ${remainingTime} minute(s).`,
+          });
       }
     }
 
@@ -140,6 +143,7 @@ const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const getUserProfile = async (req, res, next) => {
   try {
