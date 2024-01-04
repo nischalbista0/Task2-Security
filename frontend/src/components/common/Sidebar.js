@@ -2,11 +2,15 @@ import React, { useContext } from "react";
 import { BsCheck2Circle } from "react-icons/bs";
 import { FaExchangeAlt } from "react-icons/fa";
 import { FiHome, FiMoreHorizontal, FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import BrandLogo from "../../assets/images/brandLogo.png";
 import { UserContext } from "../../context/UserContext";
 
 const Sidebar = ({ activeTab, handleTabClick }) => {
   const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
   return (
     <div className="fixed z-20 bg-white dark:bg-black bottom-0 w-full md-2:bg-black md-2:w-[280px] md-2:min-h-[100vh] md-2:flex md-2:flex-col md-2:justify-between md-2:py-5">
       <div className="md-2:flex md-2:flex-col md-2:gap-10">
@@ -99,7 +103,13 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
 
       <div
         className="hidden cursor-pointer md-2:flex justify-between items-center md-2:px-4 md-2:py-2 rounded-lg mx-4 transition duration-300 hover:bg-black-75"
-        onClick={() => handleTabClick("profile")}
+        onClick={() => {
+          if (user) {
+            handleTabClick("profile");
+          } else {
+            navigate("/please-login");
+          }
+        }}
       >
         <div className="flex items-center gap-2 text-black dark:text-white md-2:text-white">
           <img
@@ -111,7 +121,9 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
             alt=""
             className="w-[35px] h-[35px] rounded-full object-fill"
           />
-          <p className="font-medium">{user?.data[0].fullname}</p>
+          <p className="font-medium">{
+            user ? user?.data[0].name : "Guest User"
+          }</p>
         </div>
 
         <div>

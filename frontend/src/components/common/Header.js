@@ -2,10 +2,13 @@ import React, { useContext, useState } from "react";
 import { BsFillSunFill, BsMoonFill } from "react-icons/bs";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [theme, setTheme] = useState("light");
+
+  const navigate = useNavigate();
 
   const handleThemeChange = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -15,7 +18,11 @@ const Header = (props) => {
   };
 
   const handleAddBookClick = () => {
+   if (user) {
     props.openModal();
+   } else {
+    navigate('/please-login')
+   }
   };
 
   return (

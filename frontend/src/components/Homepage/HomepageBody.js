@@ -7,16 +7,17 @@ const HomepageBody = ({ handleBookClick, userInfo, fetchUserInfo }) => {
   const { user } = useContext(UserContext);
   const [books, setBooks] = useState([]);
 
+  console.log(user)
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/books", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
       })
       .then((response) => setBooks(response.data.data))
       .catch((error) => console.log(error));
   }, []);
+
+  console.log(books);
 
   // Filter books array to show only posts of other people
   const filteredBooks = books.filter(
@@ -57,6 +58,12 @@ const HomepageBody = ({ handleBookClick, userInfo, fetchUserInfo }) => {
           ))
         )}
       </div>
+
+      {/* {
+        user === null && (
+          <div className="absolute top-0 left-0 h-[100vh] w-screen bg-black"></div>
+        )
+      } */}
     </div>
   );
 };

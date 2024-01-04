@@ -29,13 +29,6 @@ const SignupPage = () => {
     const passwordScore = zxcvbn(password);
     setPasswordStrength(passwordScore.score);
 
-    // Check if password meets complexity requirements
-    if (passwordScore.score < 2) {
-      setError("Password is too weak. Please choose a stronger password.");
-      setIsLoading(false);
-      return;
-    }
-
     axios
       .post("http://localhost:3001/users/register", {
         fullname,
@@ -82,7 +75,7 @@ const SignupPage = () => {
         return "";
     }
   };
-  
+
   const getPasswordStrengthColor = (score) => {
     switch (score) {
       case 0:
@@ -108,7 +101,6 @@ const SignupPage = () => {
     const passwordScore = zxcvbn(e.target.value);
     setPasswordStrength(passwordScore.score);
   };
-  
 
   return (
     <div className="bg-container bg-[url('./assets/images/light-bg.jpg')] dark:bg-[url('./assets/images/dark-bg.jpg')] bg-contain bg-no-repeat min-h-[100vh] flex bg-light-bg dark:bg-dark-bg">
@@ -168,16 +160,19 @@ const SignupPage = () => {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              <div className="text-sm text-gray-500">
-                Password Strength:{" "}
-                <span
-                  className={`text-${getPasswordStrengthColor(
-                    passwordStrength
-                  )}`}
-                >
-                  {getPasswordStrengthLabel(passwordStrength)}
-                </span>
-              </div>
+
+              {password && (
+                <div className="text-sm text-gray-500">
+                  Password Strength:{" "}
+                  <span
+                    className={`text-${getPasswordStrengthColor(
+                      passwordStrength
+                    )}`}
+                  >
+                    {getPasswordStrengthLabel(passwordStrength)}
+                  </span>
+                </div>
+              )}
 
               <div className="flex flex-col gap-2 mb-2">
                 <div className="flex gap-2">

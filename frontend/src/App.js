@@ -10,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <MainPage /> : <LandingPage />} />
+        <Route path="/" element={ <MainPage />} />
         <Route
           path="/signin"
           element={user ? <Navigate to="/" /> : <SigninPage />}
@@ -26,6 +27,8 @@ function App() {
           path="/signup"
           element={user ? <Navigate to="/" /> : <SignupPage />}
         />
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/please-login" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

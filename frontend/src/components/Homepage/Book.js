@@ -5,12 +5,15 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { UserContext } from "../../context/UserContext";
 import { getTimeDifference } from "../../utils/dateUtils";
+import { useNavigate } from "react-router-dom";
 
 const Book = ({ book, handleBookClick, fetchUserInfo, userInfo }) => {
   const { title, author, imageUrl, user } = book;
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user: currentUser, setUser } = useContext(UserContext);
   const [exchangeRequestCount, setExchangeRequestCount] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user.id) {
@@ -116,7 +119,12 @@ const Book = ({ book, handleBookClick, fetchUserInfo, userInfo }) => {
   };
 
   const handleClick = () => {
-    handleBookClick(book);
+    if (currentUser) {
+      handleBookClick(book);
+    } else {
+      // setShowModal(true);
+      navigate("/please-login");
+    }
   };
 
   return (
