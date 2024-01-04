@@ -59,6 +59,14 @@ const userSchema = new Schema({
     type: Date,
     default: null,
   },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
+  },
 });
 
 // set toJSON method to not to return hashed password
