@@ -94,6 +94,13 @@ const SigninPage = () => {
                     Remember me
                   </label>
                 </div>
+
+                <Link
+                  to="/forgotPassword"
+                  className="font-medium dark:text-white"
+                >
+                  Recover password
+                </Link>
               </div>
 
               <PrimaryButton

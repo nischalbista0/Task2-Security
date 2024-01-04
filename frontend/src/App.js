@@ -11,6 +11,7 @@ import MainPage from "./pages/MainPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
   const { user } = useContext(UserContext);
@@ -29,6 +30,7 @@ function App() {
         />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/please-login" element={<ErrorPage />} />
+        <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
       </Routes>
     </Router>
   );
