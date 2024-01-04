@@ -60,12 +60,13 @@ const loginUser = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ username: username });
-    if (!user) {
-      return res.status(400).json({ error: "User is not registered" });
-    }
 
     if (!username || !password) {
       return res.status(400).json({ error: "Please fill in all fields" });
+    }
+
+    if (!user) {
+      return res.status(400).json({ error: "User is not registered" });
     }
 
     // Check if the account is locked
@@ -80,11 +81,10 @@ const loginUser = async (req, res, next) => {
         user.failedLoginAttempts = 0;
         await user.save();
       } else {
-        const remainingTime = Math.ceil(2 - lockoutDurationMinutes); // Calculate remaining time rounded up
         return res
           .status(400)
           .json({
-            error: `Account is locked. Please try again later after ${remainingTime} minute(s).`,
+            error: "Account is locked. Please try again later after 2 minutes.",
           });
       }
     }
@@ -137,13 +137,11 @@ const loginUser = async (req, res, next) => {
       }
       res.json({ status: "success", token: token });
     });
-
   } catch (error) {
     /* istanbul ignore next */
     next(error);
   }
 };
-
 
 const getUserProfile = async (req, res, next) => {
   try {
