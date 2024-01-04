@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/uploads");
 const userController = require("../controllers/user-controller");
+const passwordRecoveryController = require("../controllers/passwordRecoveryController");
 const { verifyUser } = require("../middlewares/auth");
 
 // User registration
@@ -29,6 +30,16 @@ router.post("/uploadImage", verifyUser, upload, userController.uploadImage);
 router.get(
   "/:user_id/exchange-requests",
   userController.getAllExchangeRequests
+);
+
+// Password recovery routes
+router.post(
+  "/password-recovery/request-password-reset",
+  passwordRecoveryController.requestPasswordReset
+);
+router.post(
+  "/password-recovery/reset-password/:token",
+  passwordRecoveryController.resetPassword
 );
 
 module.exports = router;

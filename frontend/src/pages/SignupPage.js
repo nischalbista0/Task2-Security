@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaUser } from "react-icons/fa";
 import { HiMail, HiUser, HiUserCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import zxcvbn from "zxcvbn";
@@ -196,6 +196,21 @@ const SignupPage = () => {
                 isLoading={isLoading}
                 onClick={handleSignup}
               />
+
+              <div className="flex items-center gap-4 px-[10%] py-2">
+                <hr className="flex-1 border dark:border-white" />
+                <p className="font-semibold dark:text-white">or</p>
+                <hr className="flex-1 border dark:border-white" />
+              </div>
+
+              <Link to="/">
+                <button className="w-full flex items-center justify-center gap-2 bg-none border border-black dark:border-white rounded-[3px] py-3 px-5 sm:px-8">
+                  <FaUser className="text-xl text-black dark:text-white" />
+                  <p className="font-semibold dark:text-white">
+                    Continue as Guest
+                  </p>
+                </button>
+              </Link>
             </form>
 
             <div className="hidden sm:flex flex-col items-center gap-1 lg:flex-row lg:gap-2 2xl:mt-[10%]">
