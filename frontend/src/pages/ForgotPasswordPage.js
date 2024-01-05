@@ -111,8 +111,7 @@ const ForgotPasswordPage = () => {
 
               <p className="text-dark-slate">
                 Enter your email below, you will receive an email with
-                instructions on how to reset your password in a few minutes. You
-                can also set a new password if you’ve never set one before.
+                instructions on how to reset your password in a few minutes.
               </p>
             </div>
 

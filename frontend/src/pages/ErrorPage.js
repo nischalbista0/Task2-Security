@@ -10,7 +10,7 @@ const ErrorPage = () => {
         </p>
         <a
           href="/signin"  
-          className="text-white text-lg font-medium bg-purple-lighter hover:bg-purple-lighter-hover py-2.5 px-8 rounded-lg cursor-pointer transition duration-300"
+          className="text-white text-lg font-medium bg-purple-lighter hover:bg-purple-lighter-hover py-2 px-8 rounded-lg cursor-pointer transition duration-300"
         >
           Log In
         </a>

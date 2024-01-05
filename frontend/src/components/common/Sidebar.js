@@ -11,6 +11,8 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
 
   const navigate = useNavigate();
 
+  console.log(user?.data[0]);
+
   return (
     <div className="fixed z-20 bg-white dark:bg-black bottom-0 w-full md-2:bg-black md-2:w-[280px] md-2:min-h-[100vh] md-2:flex md-2:flex-col md-2:justify-between md-2:py-5">
       <div className="md-2:flex md-2:flex-col md-2:gap-10">
@@ -121,9 +123,9 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
             alt=""
             className="w-[35px] h-[35px] rounded-full object-fill"
           />
-          <p className="font-medium">{
-            user ? user?.data[0].name : "Guest User"
-          }</p>
+          <p className="font-medium">
+            {user ? user?.data[0].fullname : "Guest User"}
+          </p>
         </div>
 
         <div>
