@@ -67,6 +67,12 @@ const userSchema = new Schema({
     type: Date,
     default: null,
   },
+  passwordHistory: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 // set toJSON method to not to return hashed password
