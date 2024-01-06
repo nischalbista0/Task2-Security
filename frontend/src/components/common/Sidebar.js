@@ -5,13 +5,12 @@ import { FiHome, FiMoreHorizontal, FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import BrandLogo from "../../assets/images/brandLogo.png";
 import { UserContext } from "../../context/UserContext";
+import { RxDashboard } from "react-icons/rx";
 
 const Sidebar = ({ activeTab, handleTabClick }) => {
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
-
-  console.log(user);
 
   return (
     <div className="fixed z-20 bg-white dark:bg-black bottom-0 w-full md-2:bg-black md-2:w-[280px] md-2:min-h-[100vh] md-2:flex md-2:flex-col md-2:justify-between md-2:py-5">
@@ -58,47 +57,72 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
               )}
             </li>
 
-            <li
-              className={`relative hover:text-purple-lighter hover:dark:text-purple-lighter cursor-pointer transition duration-200 ease-linear md-2:text-white md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-dark-bg ${
-                activeTab === "exchange"
-                  ? "text-purple-lighter dark:text-purple-lighter md-2:text-purple-lighter md-2:bg-dark-bg"
-                  : "text-black dark:text-white"
-              }`}
-              onClick={() => {
-                handleTabClick("exchange");
-                localStorage.setItem("activeTab", "exchange");
-              }}
-            >
-              <FaExchangeAlt className="w-5 h-5" />
-              <p className="hidden font-semibold md-2:block">
-                Exchange Requests
-              </p>
+            {user?.data[0].userType === "admin" && (
+              <li
+                className={`relative hover:text-purple-lighter hover:dark:text-purple-lighter cursor-pointer transition duration-200 ease-linear md-2:text-white md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-dark-bg ${
+                  activeTab === "dashboard"
+                    ? "text-purple-lighter dark:text-purple-lighter md-2:text-purple-lighter md-2:bg-dark-bg"
+                    : "text-black dark:text-white"
+                }`}
+                onClick={() => {
+                  handleTabClick("dashboard");
+                  localStorage.setItem("activeTab", "dashboard");
+                }}
+              >
+                <RxDashboard className="w-5 h-5" />
+                <p className="hidden font-semibold md-2:block">Dashoard</p>
 
-              {activeTab === "exchange" && (
-                <div className="md-2:bg-purple-lighter h-full w-[2px] absolute left-0"></div>
-              )}
-            </li>
+                {activeTab === "dashboard" && (
+                  <div className="md-2:bg-purple-lighter h-full w-[2px] absolute left-0"></div>
+                )}
+              </li>
+            )}
 
-            <li
-              className={`relative hover:text-purple-lighter hover:dark:text-purple-lighter cursor-pointer transition duration-200 ease-linear md-2:text-white md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-dark-bg ${
-                activeTab === "acceptedRequests"
-                  ? "text-purple-lighter dark:text-purple-lighter md-2:text-purple-lighter md-2:bg-dark-bg"
-                  : "text-black dark:text-white"
-              }`}
-              onClick={() => {
-                handleTabClick("acceptedRequests");
-                localStorage.setItem("activeTab", "acceptedRequests");
-              }}
-            >
-              <BsCheck2Circle className="w-5 h-5" />
-              <p className="hidden font-semibold md-2:block">
-                Accepted Requests
-              </p>
+            {user?.data[0].userType !== "admin" && (
+              <>
+                <li
+                  className={`relative hover:text-purple-lighter hover:dark:text-purple-lighter cursor-pointer transition duration-200 ease-linear md-2:text-white md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-dark-bg ${
+                    activeTab === "exchange"
+                      ? "text-purple-lighter dark:text-purple-lighter md-2:text-purple-lighter md-2:bg-dark-bg"
+                      : "text-black dark:text-white"
+                  }`}
+                  onClick={() => {
+                    handleTabClick("exchange");
+                    localStorage.setItem("activeTab", "exchange");
+                  }}
+                >
+                  <FaExchangeAlt className="w-5 h-5" />
+                  <p className="hidden font-semibold md-2:block">
+                    Exchange Requests
+                  </p>
 
-              {activeTab === "acceptedRequests" && (
-                <div className="md-2:bg-purple-lighter h-full w-[2px] absolute left-0"></div>
-              )}
-            </li>
+                  {activeTab === "exchange" && (
+                    <div className="md-2:bg-purple-lighter h-full w-[2px] absolute left-0"></div>
+                  )}
+                </li>
+
+                <li
+                  className={`relative hover:text-purple-lighter hover:dark:text-purple-lighter cursor-pointer transition duration-200 ease-linear md-2:text-white md-2:flex md-2:items-center md-2:gap-3 md-2:w-full md-2:px-4 md-2:py-2.5 md-2:rounded-md-2 md-2:hover:bg-dark-bg ${
+                    activeTab === "acceptedRequests"
+                      ? "text-purple-lighter dark:text-purple-lighter md-2:text-purple-lighter md-2:bg-dark-bg"
+                      : "text-black dark:text-white"
+                  }`}
+                  onClick={() => {
+                    handleTabClick("acceptedRequests");
+                    localStorage.setItem("activeTab", "acceptedRequests");
+                  }}
+                >
+                  <BsCheck2Circle className="w-5 h-5" />
+                  <p className="hidden font-semibold md-2:block">
+                    Accepted Requests
+                  </p>
+
+                  {activeTab === "acceptedRequests" && (
+                    <div className="md-2:bg-purple-lighter h-full w-[2px] absolute left-0"></div>
+                  )}
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </div>

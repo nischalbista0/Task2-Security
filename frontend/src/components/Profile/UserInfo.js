@@ -12,6 +12,7 @@ const UserInfo = () => {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [error, setError] = useState(null); // AddedState variable to store the total number of books
   const fileInputRef = useRef(null);
+  console.log(user?.data[0].userType);
 
   const handleProfilePictureChange = (e) => {
     setProfilePicture(e.target.files[0]);
@@ -109,7 +110,12 @@ const UserInfo = () => {
       )}
 
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold">{user?.data[0].fullname}</p>
+        <p className="text-xl font-semibold">{user?.data[0].fullname} {
+          user?.data[0].userType === 'admin' && (
+            <span className="text-xl font-semibold"> (Admin)</span>
+          )
+        }</p>
+        
         <p className="text-sm font-light">{user?.data[0].email}</p>
         <p className="text-[15px]">{user?.data[0].bio}</p>
       </div>

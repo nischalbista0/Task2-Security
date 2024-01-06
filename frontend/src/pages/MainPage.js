@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AcceptedRequestsBody from "../components/AcceptedRequests/AcceptedRequestsBody";
 import ExchangeRequestsBody from "../components/ExchangeRequests/ExchangeRequestsBody";
 import BookDetails from "../components/Homepage/BookDetails";
@@ -9,12 +9,14 @@ import SearchBody from "../components/SearchPage/SearchBody";
 import Header from "../components/common/Header";
 import Sidebar from "../components/common/Sidebar";
 import BookModal from "../components/modal/AddBookModal";
+import { UserContext } from "../context/UserContext";
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const { user } = useContext(UserContext);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -104,6 +106,10 @@ const MainPage = () => {
           fetchUserInfo={fetchUserInfo}
         />
       ),
+    },
+    dashboard: {
+      header: "Admin Dashboard",
+      body: <></>,
     },
   };
 

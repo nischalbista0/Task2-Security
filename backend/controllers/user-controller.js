@@ -69,6 +69,8 @@ const loginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: username });
 
+    console.log(user);
+
     if (!username || !password) {
       return res.status(400).json({ error: "Please fill in all fields" });
     }
@@ -147,7 +149,7 @@ const loginUser = async (req, res, next) => {
         /* istanbul ignore next */
         return res.status(500).json({ error: err.message });
       }
-      res.json({ status: "success", token: token });
+      res.json({ status: "success", token: token, user: user });
     });
   } catch (error) {
     /* istanbul ignore next */

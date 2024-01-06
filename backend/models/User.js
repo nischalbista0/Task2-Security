@@ -73,6 +73,12 @@ const userSchema = new Schema({
       required: true,
     },
   ],
+  userType: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+    required: true,
+  },
 });
 
 // set toJSON method to not to return hashed password

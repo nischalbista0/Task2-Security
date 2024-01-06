@@ -17,8 +17,6 @@ const HomepageBody = ({ handleBookClick, userInfo, fetchUserInfo }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(books);
-
   // Filter books array to show only posts of other people
   const filteredBooks = books.filter(
     (book) => book.user.id !== user?.data[0].id
