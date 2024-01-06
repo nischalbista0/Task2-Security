@@ -81,16 +81,22 @@ const loginUser = async (req, res, next) => {
     if (user.accountLocked) {
       // Check if it's time to unlock the account
       const lockoutDurationMillis = Date.now() - user.lastFailedLoginAttempt;
-      const lockoutDurationMinutes = lockoutDurationMillis / (60 * 1000); // convert to minutes
+      const lockoutDurationSeconds = lockoutDurationMillis / 1000; // convert to seconds
 
-      if (lockoutDurationMinutes >= 2) {
+      if (lockoutDurationSeconds >= 120) {
+        // 2 minutes in seconds
         // Unlock the account
         user.accountLocked = false;
         user.failedLoginAttempts = 0;
         await user.save();
       } else {
+        // Calculate the time remaining for the account lockout period
+        const timeRemainingSeconds = 120 - lockoutDurationSeconds;
+        const minutes = Math.floor(timeRemainingSeconds / 60);
+        const seconds = Math.floor(timeRemainingSeconds % 60);
+
         return res.status(400).json({
-          error: "Account is locked. Please try again later after 2 minutes.",
+          error: `Account is locked. Please try again later after ${minutes} minutes and ${seconds} seconds.`,
         });
       }
     }
@@ -252,7 +258,6 @@ const updatePassword = async (req, res, next) => {
     next(error);
   }
 };
-
 
 const updateUserProfile = async (req, res, next) => {
   const userId = req.user.id;

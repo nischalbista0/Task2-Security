@@ -11,7 +11,7 @@ const Sidebar = ({ activeTab, handleTabClick }) => {
 
   const navigate = useNavigate();
 
-  console.log(user?.data[0]);
+  console.log(user);
 
   return (
     <div className="fixed z-20 bg-white dark:bg-black bottom-0 w-full md-2:bg-black md-2:w-[280px] md-2:min-h-[100vh] md-2:flex md-2:flex-col md-2:justify-between md-2:py-5">

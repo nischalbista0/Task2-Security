@@ -6,20 +6,22 @@ import {
   Routes,
 } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
+import ErrorPage from "./pages/ErrorPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
-import ErrorPage from "./pages/ErrorPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
   const { user } = useContext(UserContext);
 
+  console.log(user);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={ <MainPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route
           path="/signin"
           element={user ? <Navigate to="/" /> : <SigninPage />}

@@ -36,7 +36,8 @@ const SigninPage = () => {
         localStorage.setItem("token", response.data.token);
         // Assuming the user data is returned in the response
         const user = response.data.user;
-        setUser(user);
+        // console.log("User", user);
+        // setUser(user);
         setIsLoading(false); // Set isLoading to false after the API call is completed
         window.location.href = "/";
       })
