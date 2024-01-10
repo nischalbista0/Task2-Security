@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { BsFillSunFill, BsMoonFill } from "react-icons/bs";
 import { IoAddCircleSharp } from "react-icons/io5";
-import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 const Header = (props) => {
   const { user } = useContext(UserContext);
@@ -18,11 +18,11 @@ const Header = (props) => {
   };
 
   const handleAddBookClick = () => {
-   if (user) {
-    props.openModal();
-   } else {
-    navigate('/please-login')
-   }
+    if (user) {
+      props.openModal();
+    } else {
+      navigate("/please-login");
+    }
   };
 
   return (
@@ -60,6 +60,7 @@ const Header = (props) => {
               } text-black dark:text-white`}
               onClick={handleThemeChange}
               data-testid="theme-sun-button"
+              title="Switch to Light Mode"
             >
               <BsFillSunFill className="w-3.5 h-3.5" />
             </button>
@@ -69,6 +70,7 @@ const Header = (props) => {
               } text-black dark:text-white`}
               onClick={handleThemeChange}
               data-testid="theme-moon-button"
+              title="Switch to Dark Mode"
             >
               <BsMoonFill className="w-3.5 h-3.5" />
             </button>

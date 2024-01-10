@@ -25,7 +25,7 @@ module.exports = {
 
       "pale-yellow": "#FAE8A4",
       "pale-red": "#E99898",
-      "pale-green": "#98E9AB",
+      "pale-green": "#79AC78",
       "pale-yellow-80": "#FEFAED",
       "pale-red-80": "#FBEAEA",
       "pale-green-80": "#EAFBEE",
