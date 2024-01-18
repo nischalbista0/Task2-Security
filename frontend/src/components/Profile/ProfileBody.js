@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 import Button from "./Button";
 import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
@@ -8,6 +9,7 @@ import YourBooks from "./YourBooks";
 
 const ProfileBody = ({ userInfo, fetchUserInfo }) => {
   const [activeButton, setActiveButton] = useState("Your Books");
+  const { user } = useContext(UserContext);
 
   const handleButtonClick = (btnName) => {
     setActiveButton(btnName);
@@ -35,11 +37,13 @@ const ProfileBody = ({ userInfo, fetchUserInfo }) => {
             activeButton={activeButton}
             handleButtonClick={handleButtonClick}
           />
-          <Button
-            btnName="Bookmarks"
-            activeButton={activeButton}
-            handleButtonClick={handleButtonClick}
-          />
+          {user?.data[0]?.userType !== "admin" && (
+            <Button
+              btnName="Bookmarks"
+              activeButton={activeButton}
+              handleButtonClick={handleButtonClick}
+            />
+          )}
           <Button
             btnName="Edit Profile"
             activeButton={activeButton}

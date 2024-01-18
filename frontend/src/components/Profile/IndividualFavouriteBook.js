@@ -102,9 +102,9 @@ const IndividualFavouriteBook = ({ bookId, userInfo, fetchUserInfo }) => {
     <div className="cursor-pointer relative w-fit bg-dark-slate-85 dark:bg-black-75 p-4 pt-12 rounded-lg flex flex-col gap-4 transition duration-200">
       <button className="absolute top-3 right-2" onClick={handleBookmarkClick}>
         {isBookmarked ? (
-          <BsBookmarkFill className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+          <BsBookmarkFill className="w-5 h-5 cursor-pointer text-black-75 transition duration-300 dark:text-white" />
         ) : (
-          <BsBookmark className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+          <BsBookmark className="w-5 h-5 cursor-pointer text-black-75 transition duration-300 dark:text-white" />
         )}
       </button>
 

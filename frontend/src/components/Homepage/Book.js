@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineSwap } from "react-icons/ai";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { BsBookmark, BsBookmarkFill, BsTrash } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { getTimeDifference } from "../../utils/dateUtils";
-import { useNavigate } from "react-router-dom";
 
 const Book = ({ book, handleBookClick, fetchUserInfo, userInfo }) => {
   const { title, author, imageUrl, user } = book;
@@ -155,13 +155,35 @@ const Book = ({ book, handleBookClick, fetchUserInfo, userInfo }) => {
             <p className="text-sm text-white">@{book.user.username}</p>
           </div>
 
-          <button onClick={handleBookmarkClick}>
-            {isBookmarked ? (
-              <BsBookmarkFill className="w-5 h-5 cursor-pointer text-white transition duration-300" />
-            ) : (
-              <BsBookmark className="w-5 h-5 cursor-pointer text-white transition duration-300" />
-            )}
-          </button>
+          {currentUser?.data[0]?.userType !== "admin" ? (
+            <button onClick={handleBookmarkClick}>
+              {isBookmarked ? (
+                <BsBookmarkFill className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+              ) : (
+                <BsBookmark className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+              )}
+            </button>
+          ) : (
+            <button onClick={
+              async (e) => {
+                e.stopPropagation();
+                try {
+                  const token = localStorage.getItem("token");
+                  await axios.delete(`http://localhost:3001/books/${book._id}`, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
+
+                  window.location.reload();
+                } catch (error) {
+                  console.log(error);
+                }
+              }
+            }>
+              <BsTrash className="w-5 h-5 cursor-pointer text-white transition duration-300" />
+            </button>
+          )}
         </div>
       </div>
 

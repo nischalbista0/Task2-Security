@@ -99,7 +99,7 @@ const IndividualYourBook = ({ book }) => {
       {isDeleteModalOpen && (
         <div className="bg-[#000000cb] text-white fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center">
           {/* Delete confirmation modal */}
-          <div className="modal relative w-full max-w-2xl overflow-auto">
+          <div className="modal relative w-full max-w-xl overflow-auto">
             <div className="relative py-10 mx-5 bg-black-75 p-4 rounded-xl shadow dark:bg-gray-700">
               <button className="absolute top-3 right-4">
                 <IoClose

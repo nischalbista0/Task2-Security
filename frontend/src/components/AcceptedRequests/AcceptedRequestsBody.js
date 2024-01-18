@@ -29,13 +29,17 @@ const AcceptedRequestsBody = () => {
 
   return (
     <div className="mt-5 mb-16 flex flex-col items-stretch gap-4 md-2:mb-5">
-      {acceptedRequests.length === 0 && user ? (
+      {acceptedRequests.length === 0 && (
         <div className="text-center">
           <p className="font-medium text-center md-2:text-lg">
             No Accepted Requests yet 🙁
           </p>
         </div>
-      ) : (
+      ) }
+      
+      {
+        user === null &&
+      (
         <div className="flex flex-col items-center gap-4">
           <p className="font-medium text-center md-2:text-lg">
             You are not <span className="text-purple-lighter">logged in.</span>
@@ -49,6 +53,7 @@ const AcceptedRequestsBody = () => {
           </a>
         </div>
       )}
+
       {acceptedRequests.map((request) => (
         <AcceptedRequest
           key={request._id}

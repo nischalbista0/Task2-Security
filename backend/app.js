@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const user_routes = require("./routes/user-routes");
 const books_routes = require("./routes/book-routes");
 const exchangeRoutes = require("./routes/exchange-routes");
+const adminRoutes = require("./routes/admin-routes");
 const { verifyUser } = require("./middlewares/auth");
 const cors = require("cors");
 const MONGODB_URI =
@@ -30,6 +31,8 @@ app.use("/users", user_routes);
 app.use("/books", books_routes);
 
 app.use("/exchange", exchangeRoutes);
+
+app.use("/admin", verifyUser, adminRoutes);
 
 // Error handling middleware
 /* istanbul ignore next */

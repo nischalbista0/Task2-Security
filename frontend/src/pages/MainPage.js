@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AcceptedRequestsBody from "../components/AcceptedRequests/AcceptedRequestsBody";
 import ExchangeRequestsBody from "../components/ExchangeRequests/ExchangeRequestsBody";
 import BookDetails from "../components/Homepage/BookDetails";
@@ -10,6 +10,7 @@ import Header from "../components/common/Header";
 import Sidebar from "../components/common/Sidebar";
 import BookModal from "../components/modal/AddBookModal";
 import { UserContext } from "../context/UserContext";
+import Dashboard from "../components/Admin/Dashboard";
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -17,6 +18,12 @@ const MainPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user?.data[0]?.userType === "admin") {
+      setActiveTab("dashboard");
+    }
+  }, [user]);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -109,7 +116,7 @@ const MainPage = () => {
     },
     dashboard: {
       header: "Admin Dashboard",
-      body: <></>,
+      body: <Dashboard />,
     },
   };
 
@@ -117,20 +124,28 @@ const MainPage = () => {
 
   return (
     <div className="flex w-full min-h-[100vh] bg-light-bg dark:bg-dark-bg">
-      <Sidebar activeTab={activeTab} handleTabClick={handleTabClick} />
+      {user?.data[0]?.userType ? (
+        <>
+          <Sidebar activeTab={activeTab} handleTabClick={handleTabClick} />
 
-      <div className="flex flex-col justify-between text-black dark:text-white p-6 w-full md-2:ml-[280px] md-2:flex-1 md-2:relative md-2:px-6 md-2:py-0 lg:px-10">
-        <div>
-          <Header
-            currentPage={header}
-            pageInfo={pageInfo}
-            handleTabClick={handleTabClick}
-            openModal={openModal}
-          />
+          <div className="flex flex-col justify-between text-black dark:text-white p-6 w-full md-2:ml-[280px] md-2:flex-1 md-2:relative md-2:px-6 md-2:py-0 lg:px-10">
+            <div>
+              <Header
+                currentPage={header}
+                pageInfo={pageInfo}
+                handleTabClick={handleTabClick}
+                openModal={openModal}
+              />
 
-          {body}
+              {body}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-screen w-screen">
+          <div className="loader ease-linear border-t-4 border-purple-lighter border-solid rounded-full animate-spin h-12 w-12"></div>
         </div>
-      </div>
+      )}
 
       {isModalOpen && (
         <BookModal closeModal={closeModal} openModal={openModal} />

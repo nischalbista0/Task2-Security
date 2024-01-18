@@ -62,7 +62,7 @@ const SigninPage = () => {
               <h1 className="dark:text-white">Sign In</h1>
 
               <p className="text-dark-slate">
-                Enter your account details or use your Google account
+                Enter your account details
               </p>
             </div>
 
@@ -98,7 +98,7 @@ const SigninPage = () => {
                   to="/forgotPassword"
                   className="font-medium dark:text-white"
                 >
-                  Recover password
+                  Forgot Password?
                 </Link>
               </div>
 

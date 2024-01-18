@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { BsFillSunFill, BsMoonFill } from "react-icons/bs";
+import {FiHelpCircle} from "react-icons/fi";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
@@ -53,6 +54,7 @@ const Header = (props) => {
             <p className="font-bold">Add Book</p>
           </button>
 
+          <div className="flex items-center gap-4">
           <div className="flex border border-black">
             <button
               className={`p-2 ${
@@ -74,6 +76,13 @@ const Header = (props) => {
             >
               <BsMoonFill className="w-3.5 h-3.5" />
             </button>
+          </div>
+
+          <button className="text-2xl" title="Help" onClick={
+            () => navigate("/help")
+          }>
+            <FiHelpCircle />
+          </button>
           </div>
         </div>
 

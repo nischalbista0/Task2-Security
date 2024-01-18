@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsGlobe } from "react-icons/bs";
 import { IoBook, IoTime } from "react-icons/io5";
+import { UserContext } from "../../context/UserContext";
 import { getTimeDifference } from "../../utils/dateUtils";
 import ExchangeRequestModal from "../modal/ExchangeRequestModal";
+import axios from "axios";
 
 const BookDetails = ({ userInfo, fetchUserInfo, book, openModal }) => {
   const { title, author, genre, language, description, imageUrl, user } = book;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user: currentUser } = useContext(UserContext);
 
   useEffect(() => {
     if (user.id) {
@@ -58,12 +61,37 @@ const BookDetails = ({ userInfo, fetchUserInfo, book, openModal }) => {
             </div>
           </div>
 
-          <button
-            className="bg-purple-lighter rounded-lg text-black font-semibold px-4 py-1.5 transition duration-300 hover:bg-purple-lighter-hover vsm:px-6"
-            onClick={handleExchangeClick}
-          >
-            Request Exchange
-          </button>
+          {currentUser?.data[0]?.userType !== "admin" ? (
+            <button
+              className="bg-purple-lighter rounded-lg text-black font-semibold px-4 py-1.5 transition duration-300 hover:bg-purple-lighter-hover vsm:px-6"
+              onClick={handleExchangeClick}
+            >
+              Request Exchange
+            </button>
+          ) : (
+            <button
+              className="bg-purple-lighter rounded-lg text-black font-semibold px-4 py-1.5 transition duration-300 hover:bg-purple-lighter-hover vsm:px-6"
+              onClick={
+              async (e) => {
+                e.stopPropagation();
+                try {
+                  const token = localStorage.getItem("token");
+                  await axios.delete(`http://localhost:3001/books/${book._id}`, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
+
+                  window.location.reload();
+                } catch (error) {
+                  console.log(error);
+                }
+              }
+            }
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
 
