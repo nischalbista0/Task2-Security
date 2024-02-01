@@ -3,6 +3,12 @@ const Schema = mongoose.Schema;
 const Book = require("./Books");
 
 const userSchema = new Schema({
+  userType: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+    required: true,
+  },
   username: {
     type: String,
     required: true,
@@ -72,13 +78,7 @@ const userSchema = new Schema({
       type: String,
       required: true,
     },
-  ],
-  userType: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-    required: true,
-  },
+  ]
 });
 
 // set toJSON method to not to return hashed password

@@ -21,6 +21,23 @@ const SignupPage = () => {
   const [message, setMessage] = useState("");
   const [passwordStrength, setPasswordStrength] = useState(0);
 
+  const getPasswordStrengthLabel = (score) => {
+    switch (score) {
+      case 0:
+        return "Very Weak";
+      case 1:
+        return "Weak";
+      case 2:
+        return "Moderate";
+      case 3:
+        return "Strong";
+      case 4:
+        return "Very Strong";
+      default:
+        return "";
+    }
+  };
+
   const handleSignup = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -59,22 +76,6 @@ const SignupPage = () => {
       });
   };
 
-  const getPasswordStrengthLabel = (score) => {
-    switch (score) {
-      case 0:
-        return "Very Weak";
-      case 1:
-        return "Weak";
-      case 2:
-        return "Moderate";
-      case 3:
-        return "Strong";
-      case 4:
-        return "Very Strong";
-      default:
-        return "";
-    }
-  };
 
   const getPasswordStrengthColor = (score) => {
     switch (score) {

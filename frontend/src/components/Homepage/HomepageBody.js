@@ -25,7 +25,7 @@ const HomepageBody = ({ handleBookClick, userInfo, fetchUserInfo }) => {
 
   return (
     <div className="mt-5 mb-16 flex flex-col gap-6 md-2:mb-5">
-      {books.length > 0 ? (
+      {books.length > 0 && (
         <>
           <div className="flex items-center gap-2 font-medium vsm:gap-4">
             <button className="text-sm flex items-center gap-1 bg-purple-lighter-white-80 dark:bg-black-75 border border-purple-lighter-white-80 dark:border-black-75 px-2 py-1.5 rounded-md vsm:px-3 vsm:text-base">
@@ -60,10 +60,6 @@ const HomepageBody = ({ handleBookClick, userInfo, fetchUserInfo }) => {
             )}
           </div>
         </>
-      ) : (
-        <div className="flex justify-center items-center h-screen w-full">
-          <div className="loader ease-linear border-t-4 border-purple-lighter border-solid rounded-full animate-spin h-12 w-12"></div>
-        </div>
       )}
 
       {/* {

@@ -53,54 +53,53 @@ const requestPasswordReset = async (req, res, next) => {
 };
 
 const resetPassword = async (req, res, next) => {
-    const { token } = req.params;
-    const { password } = req.body;
-  
-    try {
-      // Check for empty password
-      if (!password) {
-        return res.status(400).json({ error: "Please enter a new password" });
-      }
-  
-      // Check for password complexity
-      const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}[\]:;<>,.?~\\-])/;
-      if (!passwordRegex.test(password)) {
-        return res.status(400).json({
-          error:
-            "Password must include a combination of Uppercase letters, Lowercase letters, Numbers, Special characters (e.g.,!, @, #, $)",
-        });
-      }
-  
-      // Check for password length
-      const minLength = 8;
-      if (password.length < minLength) {
-        return res.status(400).json({
-          error: `Password length should be at least ${minLength} characters.`,
-        });
-      }
-  
-      const user = await User.findOne({
-        resetPasswordToken: token,
-        resetPasswordExpires: { $gt: Date.now() },
-      });
-  
-      if (!user) {
-        return res.status(400).json({ error: "Invalid or expired token" });
-      }
-  
-      // Reset password and clear reset token fields
-      const hashedPassword = await bcrypt.hash(password, 10);
-      user.password = hashedPassword;
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
-      await user.save();
-  
-      res.status(200).json({ message: "Password reset successfully" });
-    } catch (error) {
-      next(error);
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Check for empty password
+    if (!password) {
+      return res.status(400).json({ error: "Please enter a new password" });
     }
-  };
-  
+
+    // Check for password complexity
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}[\]:;<>,.?~\\-])/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        error:
+          "Password must include a combination of Uppercase letters, Lowercase letters, Numbers, Special characters (e.g.,!, @, #, $)",
+      });
+    }
+
+    // Check for password length
+    const minLength = 8;
+    if (password.length < minLength) {
+      return res.status(400).json({
+        error: `Password length should be at least ${minLength} characters.`,
+      });
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "Invalid or expired token" });
+    }
+
+    // Reset password and clear reset token fields
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = { requestPasswordReset, resetPassword };

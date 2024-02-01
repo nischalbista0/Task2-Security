@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { IoClose } from "react-icons/io5";
 import { UserContext } from "../../context/UserContext";
 import Button from "./Button";
 import ChangePassword from "./ChangePassword";
@@ -58,6 +59,7 @@ const ProfileBody = ({ userInfo, fetchUserInfo }) => {
 
         {formComponent}
       </div>
+
     </div>
   );
 };

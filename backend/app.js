@@ -19,7 +19,26 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
+const rfs = require("rotating-file-stream");
+
+// For audit log
+// Ensure the log directory exists
+const logDirectory = path.join(__dirname, "logs");
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// Create a rotating write stream
+const accessLogStream = rfs.createStream("access.log", {
+  interval: "1d", // rotate daily
+  path: logDirectory,
+});
+
 const app = express();
+
+// Use morgan middleware with the rotating file streat for logging
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(cors());
 
